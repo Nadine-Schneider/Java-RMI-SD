@@ -12,24 +12,20 @@ public class ServerMain {
         Scanner scan = new Scanner(System.in);
         System.out.println("Starting account value:");
         double accountTotalValue = scan.nextDouble();
-
-        System.out.println("Antes do server");
-        TransactionAccount accountRMI = new Server(accountTotalValue);
-        System.out.println("Passou da inicialização do server");
-        System.out.println(accountRMI.getTotalValue());
+        Server serverRMI = new Server(accountTotalValue);
+        System.out.println("Total value:    R$ " + serverRMI.getTotalValue());
 
         try {
             //Aqui está ocorrendo o ERRO: java.rmi.ConnectException: Connection refused to host: 192.168.1.16;
 
-            //Naming.rebind("localhost:3000", accountRMI);
-            //System.out.println("Server is running.");
+            Naming.rebind("rmi://localhost:3000/TransactionAccount", serverRMI);
+            System.out.println("Server is running.");
+            //TransactionAccount stub = (TransactionAccount) UnicastRemoteObject.exportObject(serverRMI, 0);
+            //Registry registry = LocateRegistry.getRegistry();
 
-            TransactionAccount stub = (TransactionAccount) UnicastRemoteObject.exportObject(accountRMI, 3000);
-            Registry registry = LocateRegistry.getRegistry();
+            //registry.rebind("teste", stub);
 
-            registry.rebind("teste", stub);
-
-        } catch (RemoteException ex) {
+        } catch (RemoteException | MalformedURLException ex) {
             ex.printStackTrace();
         }
 
