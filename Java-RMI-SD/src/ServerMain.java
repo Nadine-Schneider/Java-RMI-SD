@@ -1,6 +1,7 @@
 import java.net.MalformedURLException;
 import java.rmi.*;
 import java.rmi.RemoteException;
+import java.rmi.server.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -18,7 +19,7 @@ public class ServerMain {
         try {
             //Aqui está ocorrendo o ERRO: java.rmi.ConnectException: Connection refused to host: 192.168.1.16;
 
-            Naming.rebind("rmi://localhost:3000/TransactionAccount", serverRMI);
+            Naming.rebind("//localhost:3000/TransactionAccount", serverRMI);
             System.out.println("Server is running.");
             //TransactionAccount stub = (TransactionAccount) UnicastRemoteObject.exportObject(serverRMI, 0);
             //Registry registry = LocateRegistry.getRegistry();
