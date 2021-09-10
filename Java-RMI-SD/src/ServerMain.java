@@ -17,14 +17,10 @@ public class ServerMain {
         System.out.println("Total value:    R$ " + serverRMI.getTotalValue());
 
         try {
-            //Aqui está ocorrendo o ERRO: java.rmi.ConnectException: Connection refused to host: 192.168.1.16;
 
             Naming.rebind("//localhost:3000/TransactionAccount", serverRMI);
             System.out.println("Server is running.");
-            //TransactionAccount stub = (TransactionAccount) UnicastRemoteObject.exportObject(serverRMI, 0);
-            //Registry registry = LocateRegistry.getRegistry();
 
-            //registry.rebind("teste", stub);
 
         } catch (RemoteException | MalformedURLException ex) {
             ex.printStackTrace();
